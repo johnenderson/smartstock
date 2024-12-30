@@ -1,0 +1,19 @@
+meta {
+  name: Purchase Request
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3001/api/purchases
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "grant_type": "client_credentials",
+    "client_id": "ABC",
+    "client_secret": "DEF"
+  }
+}
