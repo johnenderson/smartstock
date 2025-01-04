@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import tech.jes.smartstock.client.dto.AuthRequest;
 import tech.jes.smartstock.client.dto.AuthResponse;
 
-@FeignClient(name = "AuthClient", url = "${api.auth-url}")
+@FeignClient(
+        name = "AuthClient",
+        url = "${api.auth-url}"
+)
 public interface AuthClient {
 
-    @PostMapping("/api/token")
+    @PostMapping(path = "/api/token")
     ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request);
 
 }

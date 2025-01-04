@@ -11,9 +11,11 @@ import java.io.IOException;
 public class SmartStockService {
 
     private final ReportService reportService;
+    private final PurchaseSectorService purchaseSectorService;
 
-    public SmartStockService(ReportService reportService) {
+    public SmartStockService(ReportService reportService, PurchaseSectorService purchaseSectorService) {
         this.reportService = reportService;
+        this.purchaseSectorService = purchaseSectorService;
     }
 
     public void start(String reportPath) {
@@ -28,12 +30,13 @@ public class SmartStockService {
             items.forEach(item -> {
                 if (item.getQuantity() < item.getReorderThreshold()) {
 
-                    // 2. calcular a quantidade a ser recomprada
+                    // 1. calcular a quantidade a ser recomprada
                     var reorderQuantity = calculateReorderQuantity(item);
 
-                    // 3. para cada item do csv chamar a api do setor de compras
+                    // 2. para cada item do csv chamar a api do setor de compras
+                    purchaseSectorService.sendPurchaseRequest(item, reorderQuantity);
 
-                    // 4. salvar no mongodb os itens que foram comprados
+                    // 3. salvar no mongodb os itens que foram comprados
 
                 }
             });
