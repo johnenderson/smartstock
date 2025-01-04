@@ -24,6 +24,7 @@ public class PurchaseSectorService {
 
     public boolean sendPurchaseRequest(CsvStockItem item,
                                        Integer purchaseQuantity) {
+
         // 1. autenticacao na api para recuperar o token
         var token = authService.getToken();
 
@@ -38,12 +39,12 @@ public class PurchaseSectorService {
 
         var response = purchaseSectorClient.sendPurchaseRequest(token, request);
 
-        // 3. validar se a resposta veio com sucesso.
+        // 3. validar se a resposta veio com sucesso
         if (response.getStatusCode().value() != HttpStatus.ACCEPTED.value()) {
-            logger.error("error while sending purchase request, status: {}, response: {}",
+            logger.error("error while sending purchase request, " +
+                            "status: {}, response: {}",
                     response.getStatusCode(), response.getBody());
             return false;
-
         }
 
         return true;
