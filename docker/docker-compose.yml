@@ -1,8 +1,21 @@
 services:
   mongodb:
     image: mongo
+    container_name: mongodb
     ports:
-      - 27017:27017
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=123
+
+  mockoon:
+    image: mockoon/cli:latest
+    container_name: mockoon
+    command: ["-d", "/data", "-p", "3000"]
+    volumes:
+      - type: bind
+        source: ../mockoon/purchase_sector.json
+        target: /data
+        read_only: true
+    ports:
+      - "3000:3000"
